@@ -6,12 +6,6 @@ inputs:
     description: 'To shame or to praise'
     required: true
     default: "shame"
-  SLACK_TOKEN:
-    description: 'Slack api token'
-    required: true
-  SLACK_CHANNEl:
-    description: 'Slack channel to post to'
-    required: true
   GITHUB_TOKEN:
     description: 'Github api token'
     required: true
@@ -37,12 +31,11 @@ runs:
       echo "GITHUB_REPOSITORY=${{github.repository}}" >> $GITHUB_ENV
       cat $GITHUB_ENV
 
-  - name: Slack Shame Or Praise
-    id: slack_shame_or_praise
+  - name: Test
+    id: Test
     env:
-      SLACK_TOKEN: ${{ inputs.SLACK_TOKEN }}
-      SLACK_CHANNEL: ${{ inputs.SLACK_CHANNEL }}
       GITHUB_TOKEN: ${{ inputs.GITHUB_TOKEN }}
-    run: |
-      python3 ${{github.action_path}}/src/main.py ${{inputs.command}}
     shell: bash
+    run: |
+      python3 ${{github.action_path}}/src/main.py
+      ${{github.action_path}}/src/otel-cli

@@ -7,26 +7,14 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Begin getting telemetry
+        id: shame
+        uses: uptick/actions-collect-otel@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Checkout Code
         uses: actions/checkout@v3
         with:
           # TODO: Configure fetch-depth?
           fetch-depth: 2
-
-      - name: Test shame works
-        id: shame
-        uses: uptick/actions-shame@main
-        with:
-          command: 'shame'
-          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-          SLACK_CHANNEL: 'devops-test-slack'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Test praise works
-        id: praise
-        uses: uptick/actions-shame@main
-        with:
-          command: 'praise'
-          SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
-          SLACK_CHANNEL: 'devops-test-slack'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
